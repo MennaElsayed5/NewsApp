@@ -10,4 +10,7 @@ class Converter {
 
     @TypeConverter
     fun gsonToArticleList(value: String) = Gson().fromJson(value, Array<Article>::class.java).toList()
+
+    //@TypeConverter
+    //fun convertApiTo
 }
