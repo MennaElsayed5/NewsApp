@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "News")
 data class CachedData(
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    var id:Int=0,
     val article: List<CachedArticle>
 )
 data class CachedArticle (
