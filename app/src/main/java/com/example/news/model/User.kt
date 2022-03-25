@@ -8,5 +8,6 @@ data class User(
     @PrimaryKey
     var email : String,
     var name: String,
-    var phoneNumber: Int
+    var phoneNumber: String,
+    var password: String
 )

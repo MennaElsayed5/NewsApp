@@ -6,7 +6,7 @@ import com.example.news.model.User
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [(User::class)], version = 1)
+@Database(entities = [User::class], version = 1)
 abstract class DataBase : RoomDatabase() {
     abstract fun dao(): Dao
 
