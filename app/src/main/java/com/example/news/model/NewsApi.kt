@@ -1,17 +1,12 @@
 package com.example.news.model
 
-import androidx.room.Entity
 
-@Entity(tableName = "News")
 data class NewsApi(
-    val id: String?,
-    val status: String?,
-    val totalResults: Int?,
     val articles: List<Article>
 )
 
 data class Article(
-    val source: Source?,
+    val sourceName: String?,
     val author: String?,
     val title: String?,
     val description: String?,
@@ -21,7 +16,4 @@ data class Article(
     val content: String?
 )
 
-data class Source(
-    val id: String?,
-    val name: String?
-)
+
