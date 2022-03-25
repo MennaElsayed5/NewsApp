@@ -11,14 +11,14 @@ data class CachedData(
     val article: List<CachedArticle>
 )
 data class CachedArticle (
-    val sourceName: String?,
-    val author: String? ,
-    val title: String?,
-    val description: String?,
-    val url: String?,
-    val urlToImage: String?,
-    val publishedAt: String?,
-    val content: String?
+    var sourceName: String?,
+    var author: String?,
+    var title: String?,
+    var description: String?,
+    var url: String?,
+    var urlToImage: String?,
+    var publishedAt: String?,
+    var content: String?
 )
 
 
