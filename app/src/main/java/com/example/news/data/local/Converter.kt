@@ -6,8 +6,8 @@ import com.google.gson.Gson
 
 class Converter {
     @TypeConverter
-    fun listToGson(value: List<Article>) = Gson().toJson(value)
+    fun articleListToGson(value: List<Article>) = Gson().toJson(value)
 
     @TypeConverter
-    fun gsonToList(value: String) = Gson().fromJson(value, Array<Article>::class.java).toList()
+    fun gsonToArticleList(value: String) = Gson().fromJson(value, Array<Article>::class.java).toList()
 }

@@ -8,8 +8,20 @@ import androidx.room.PrimaryKey
 data class CachedData(
     @PrimaryKey(autoGenerate = true)
     val id:Int,
-    val cachedData: List<Article>
+    val article: List<Article>
 )
+data class cachedArticle (
+    val sourceName: String?,
+    val author: String? ,
+    val title: String?,
+    val description: String?,
+    val url: String?,
+    val urlToImage: String?,
+    val publishedAt: String?,
+    val content: String?
+)
+
+
 
 
 
