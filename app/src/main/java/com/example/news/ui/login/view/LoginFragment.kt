@@ -1,7 +1,6 @@
 package com.example.news.ui.login.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.news.databinding.FragmentLoginBinding
 import com.example.news.model.UserRepository
+import com.example.news.ui.login.viewModel.ErrorData
+import com.example.news.ui.login.viewModel.LoginResult
 import com.example.news.ui.login.viewModel.LoginViewModel
 import com.example.news.ui.login.viewModel.LoginViewModelFactory
-import com.example.news.ui.register.view_model.ViewModelFactory
 
 
 class LoginFragment : Fragment() {
@@ -37,32 +37,37 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var email = binding.txtEmail.text
-        var password = binding.txtPassword.text.toString()
-
-        Log.i("variable", "onViewCreated: "+email+" "+password)
-
-        viewModel.mutableLiveData.observe(viewLifecycleOwner) {
-            it.let {
-                if (it) {
+        viewModel.liveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                LoginResult.CompleteSuccess -> {
                     navController = Navigation.findNavController(view)
                     navController.navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-                    Log.i("true", "onViewCreated: "+email+" "+password)
-
-                } else {
+                }
+                LoginResult.FailData -> {
                     binding.txtEmail.error = "Email not valid"
                     binding.txtPassword.error = "Password not valid"
-                    Log.i("else", "onViewCreated: "+email+" "+password)
-
+                }
+                is LoginResult.InvalidData -> {
+                    when (result.errorData) {
+                        ErrorData.EMAIL -> {
+                            binding.txtEmail.error = "Please enter valid email"
+                        }
+                        ErrorData.PASSWORD -> {
+                            binding.txtPassword.error = "Please enter valid password"
+                        }
+                    }
                 }
             }
-        }
 
+
+        }
         binding.btnLogIn.setOnClickListener {
+            viewModel.login(
+                binding.txtEmail.text.toString(),
+                binding.txtPassword.text.toString()
+            )
 
-            Log.i("print", "onViewCreated: "+email+" "+password)
         }
-
         binding.btnSignIn.setOnClickListener {
             navController = Navigation.findNavController(view)
             navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
@@ -70,8 +75,4 @@ class LoginFragment : Fragment() {
 
 
     }
-
-
-
-
 }
