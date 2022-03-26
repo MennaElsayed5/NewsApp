@@ -5,7 +5,7 @@ import com.example.news.data.local.Dao
 import com.example.news.data.local.DataBase
 
 
-class UserRepository private constructor(var dao: Dao) : RepoInterface {
+class UserRepository private constructor(var dao: Dao) : RepoUserInterface {
     companion object {
         @Volatile
         private var INSTANCE: UserRepository? = null
