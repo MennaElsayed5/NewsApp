@@ -12,7 +12,6 @@ import com.example.news.databinding.FragmentLoginBinding
 import com.example.news.model.UserRepository
 import com.example.news.ui.login.viewModel.LoginViewModel
 import com.example.news.ui.login.viewModel.LoginViewModelFactory
-import com.example.news.ui.register.view_model.ViewModelFactory
 
 
 class LoginFragment : Fragment() {
@@ -36,25 +35,32 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var email = (binding.txtEmail.text).toString()
-        var password = (binding.txtPassword.text).toString()
 
-        binding.btnLogIn.setOnClickListener {
-           var exist= viewModel.getUser(email, password)
-            viewModel.mutableLiveData.observe(viewLifecycleOwner) {
-                it.let {
-                    if (exist) {
-                        navController = Navigation.findNavController(view)
-                        navController.navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-                    } else {
-                        binding.txtEmail.error = "Email not valid"
-                        binding.txtPassword.error = "Password not valid"
+        viewModel.mutableLiveData.observe(viewLifecycleOwner) {
+            it.let {
+                if (it) {
+                    navController = Navigation.findNavController(view)
+                    navController.navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
 
-                    }
+                } else {
+                    binding.txtEmail.error = "Email not valid"
+                    binding.txtPassword.error = "Password not valid"
                 }
             }
         }
-
+        binding.btnLogIn.setOnClickListener {
+            if (binding.txtEmail.text.toString().isNullOrEmpty()
+                && binding.txtPassword.text.toString().isNullOrEmpty()
+            ) {
+                binding.txtEmail.error = "Please enter your email"
+                binding.txtPassword.error = "please enter your password"
+            } else {
+                viewModel.getUser(
+                    binding.txtEmail.text.toString(),
+                    binding.txtPassword.text.toString()
+                )
+            }
+        }
         binding.btnSignIn.setOnClickListener {
             navController = Navigation.findNavController(view)
             navController.navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
@@ -62,10 +68,4 @@ class LoginFragment : Fragment() {
 
 
     }
-
-    fun checkUser() {
-
-    }
-
-
 }
