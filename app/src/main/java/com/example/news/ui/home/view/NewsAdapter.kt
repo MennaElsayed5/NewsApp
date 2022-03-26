@@ -20,6 +20,13 @@ class NewsAdapter(
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(srchList: ArrayList<Article>) {
+        list.clear()
+        list.addAll(srchList)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder =
         NewsViewHolder(LayoutNewsItemBinding.inflate(LayoutInflater.from(parent.context)), listener)
 
