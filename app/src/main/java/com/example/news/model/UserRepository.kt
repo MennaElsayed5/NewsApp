@@ -25,6 +25,6 @@ class UserRepository private constructor(var dao: Dao) : RepoInterface {
     }
 
     override fun getUser(email: String, password: String): Boolean{
-        return dao.getUser(email, password)
+        return dao.isUserExisted(email, password)
     }
 }
