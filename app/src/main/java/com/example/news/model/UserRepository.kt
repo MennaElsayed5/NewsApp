@@ -5,7 +5,7 @@ import com.example.news.data.local.Dao
 import com.example.news.data.local.DataBase
 
 
-class UserRepository private constructor(var dao: Dao) : RepoInterface {
+class UserRepository private constructor(var dao: Dao) : RepoUserInterface {
     companion object {
         @Volatile
         private var INSTANCE: UserRepository? = null
@@ -20,11 +20,11 @@ class UserRepository private constructor(var dao: Dao) : RepoInterface {
         }
     }
 
-    override suspend fun insert(user: User) {
-        dao.insert(user)
+    override suspend fun insert(userEntity: UserEntity):Long {
+     return   dao.insert(userEntity)
     }
 
     override fun getUser(email: String, password: String): Boolean{
-        return dao.getUser(email, password)
+        return dao.isUserExisted(email, password)
     }
 }

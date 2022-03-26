@@ -10,6 +10,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.news.databinding.FragmentLoginBinding
 import com.example.news.model.UserRepository
+import com.example.news.ui.login.viewModel.ErrorData
+import com.example.news.ui.login.viewModel.LoginResult
 import com.example.news.ui.login.viewModel.LoginViewModel
 import com.example.news.ui.login.viewModel.LoginViewModelFactory
 
@@ -35,30 +37,36 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.mutableLiveData.observe(viewLifecycleOwner) {
-            it.let {
-                if (it) {
+        viewModel.liveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                LoginResult.CompleteSuccess -> {
                     navController = Navigation.findNavController(view)
                     navController.navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-
-                } else {
+                }
+                LoginResult.FailData -> {
                     binding.txtEmail.error = "Email not valid"
                     binding.txtPassword.error = "Password not valid"
                 }
+                is LoginResult.InvalidData -> {
+                    when (result.errorData) {
+                        ErrorData.EMAIL -> {
+                            binding.txtEmail.error = "Please enter valid email"
+                        }
+                        ErrorData.PASSWORD -> {
+                            binding.txtPassword.error = "Please enter valid password"
+                        }
+                    }
+                }
             }
+
+
         }
         binding.btnLogIn.setOnClickListener {
-            if (binding.txtEmail.text.toString().isNullOrEmpty()
-                && binding.txtPassword.text.toString().isNullOrEmpty()
-            ) {
-                binding.txtEmail.error = "Please enter your email"
-                binding.txtPassword.error = "please enter your password"
-            } else {
-                viewModel.getUser(
-                    binding.txtEmail.text.toString(),
-                    binding.txtPassword.text.toString()
-                )
-            }
+            viewModel.login(
+                binding.txtEmail.text.toString(),
+                binding.txtPassword.text.toString()
+            )
+
         }
         binding.btnSignIn.setOnClickListener {
             navController = Navigation.findNavController(view)
