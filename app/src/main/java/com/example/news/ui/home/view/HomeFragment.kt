@@ -2,6 +2,7 @@ package com.example.news.ui.home.view
 
 import android.annotation.SuppressLint
 import android.app.SearchManager
+import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -22,7 +23,7 @@ import com.example.news.ui.home.viewmodel.HomeViewModelFactory
 
 private const val TAG = "HomeFragment"
 
-class HomeFragment : Fragment(), NewsAdapter.NewsListListener {
+class HomeFragment : Fragment(), NewsAdapter.NewsListListener{
 
     private lateinit var binding: HomeFragmentBinding
     private lateinit var navController: NavController
@@ -77,10 +78,16 @@ class HomeFragment : Fragment(), NewsAdapter.NewsListListener {
 
         val searchManager =
             requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
         val searchView = menu.findItem(R.id.actionSearch)
             .actionView as SearchView
 
         searchView.maxWidth = Int.MAX_VALUE
+
+        searchView.setSearchableInfo(
+            searchManager
+                .getSearchableInfo(requireActivity().componentName)
+        )
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -112,5 +119,6 @@ class HomeFragment : Fragment(), NewsAdapter.NewsListListener {
     override fun onItemClickListener(pos: Int) {
         Log.d(TAG, "onItemClickListener: $pos")
     }
+
 
 }
