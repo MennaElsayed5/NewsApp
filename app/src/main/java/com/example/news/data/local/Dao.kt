@@ -9,6 +9,7 @@ import com.example.news.model.User
 interface Dao {
     @Insert
     suspend fun insert(user: User)
+
     @Query("SELECT EXISTS (SELECT * FROM users WHERE email =:email AND password =:password)")
     fun getUser (email :String , password:String):Boolean
 }
