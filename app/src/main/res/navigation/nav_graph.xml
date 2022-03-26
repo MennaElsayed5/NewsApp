@@ -8,7 +8,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.news.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.news.ui.register.view.RegisterFragment"
@@ -30,4 +34,9 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.news.ui.details.view.DetailsFragment"
+        android:label="details_fragment"
+        tools:layout="@layout/details_fragment" />
 </navigation>
