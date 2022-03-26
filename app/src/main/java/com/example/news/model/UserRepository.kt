@@ -20,8 +20,8 @@ class UserRepository private constructor(var dao: Dao) : RepoInterface {
         }
     }
 
-    override suspend fun insert(user: User) {
-        dao.insert(user)
+    override suspend fun insert(userEntity: UserEntity):Long {
+     return   dao.insert(userEntity)
     }
 
     override fun getUser(email: String, password: String): Boolean{
