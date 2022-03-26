@@ -4,17 +4,17 @@ import com.example.news.util.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object NetworkProvider {
+object NetworkProvider : NetworkInterface{
 
-    val retrofit =
+    private val retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    val service = retrofit.create(ApiService::class.java)
+    private val service = retrofit.create(ApiService::class.java)
 
-    fun getTopHeadLines(country: String, apiKey: String) =
+    override suspend fun getTopHeadLines(country: String, apiKey: String) =
         service.getNews(country, apiKey)
 
 }

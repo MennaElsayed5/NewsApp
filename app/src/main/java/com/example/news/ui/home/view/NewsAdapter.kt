@@ -1,4 +1,4 @@
-package com.example.news.ui.home
+package com.example.news.ui.home.view
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -39,7 +39,8 @@ class NewsAdapter(
 
         fun bind(article: Article) {
             binding.txtTitle.text = article.title
-            Picasso.get().load(article.url).into(binding.img)
+            binding.txtProvider.text = article.publishedAt
+            Picasso.get().load(article.urlToImage).into(binding.img)
         }
     }
 
