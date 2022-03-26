@@ -1,4 +1,4 @@
-package com.example.news.ui.favorite
+package com.example.news.ui.favorite.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
