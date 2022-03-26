@@ -12,5 +12,5 @@ interface Dao {
     suspend fun insert(userEntity: UserEntity):Long
 
     @Query("SELECT EXISTS (SELECT * FROM users WHERE email =:email AND password =:password)")
-    fun getUser (email :String , password:String):Boolean
+    fun isUserExisted (email :String , password:String):Boolean
 }
